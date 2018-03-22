@@ -51,6 +51,7 @@ public class CourseController extends JPanel implements Observer, ChangeListener
 		JScrollPane scrollPane = new JScrollPane(coursePanel,
 				JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
 				JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+
 		JButton button = new JButton("New Courses");
 		button.addActionListener(this);
 
@@ -142,17 +143,22 @@ public class CourseController extends JPanel implements Observer, ChangeListener
 		data.addCourseRecord(new CourseRecord("Biology", 50));
 
 		CourseController controller = new CourseController(data);
+
+		PieChartObserver pieChart = new PieChartObserver(data);
+
 		BarChartObserver bar = new BarChartObserver(data);
 
 		JScrollPane scrollPane = new JScrollPane(bar,
 				JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
 				JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 
+		JScrollPane scrollPanePie = new JScrollPane(pieChart,
+				JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+				JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+
 		JFrame frame = new JFrame("Observer Pattern");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(new GridBagLayout());
-		frame.setResizable(false);
-
 		GridBagConstraints constraints = new GridBagConstraints();
 		constraints.fill = GridBagConstraints.BOTH;
 		constraints.weightx = 0.25;
@@ -165,6 +171,11 @@ public class CourseController extends JPanel implements Observer, ChangeListener
 		constraints.gridx = 1;
 		constraints.gridy = 0;
 		frame.getContentPane().add(scrollPane, constraints);
+		constraints.weightx = 0.5;
+		constraints.weighty = 1.0;
+		constraints.gridx = 1;
+		constraints.gridy = 1;
+		frame.getContentPane().add(scrollPanePie,constraints);
 		frame.pack();
 		frame.setVisible(true);
 	}
